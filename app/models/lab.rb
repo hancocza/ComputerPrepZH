@@ -1,5 +1,5 @@
 class Lab < ApplicationRecord
-  belongs_to :course, optional: true
+  belongs_to :course
   has_many :assignments, dependent: :delete_all
   has_many :computers, :through => :assignments
   
