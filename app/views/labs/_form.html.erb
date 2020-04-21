@@ -1,0 +1,75 @@
+<%= form_with(model: lab, local: true) do |form| %>
+  <% if lab.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger">
+      <strong><%= pluralize(lab.errors.count, "error") %> prohibited this lab from being saved:</strong>
+
+      <ul>
+      <% lab.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <div class = "form-group">
+        <%= form.label :name, "Lab Name" %>
+        <%= form.text_field :name, id: :course_name, class: "form-control" %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-2">
+      <div class="form-group">
+        <%= form.label :course_id %>
+        <%= form.select :course_id, options_for_select(Course.all.collect {|a| ["#{a.name}",a.id]}, selected: (@lab.course ? @lab.course.id : Course.first.id)),{}, class: "form-control" %>
+      </div>
+    </div>
+  </div>
+  <div class = "row">
+    <div class="col-md-2">
+      <div class="form-group">
+        <%= form.label :number, "Lab Number" %>
+        <%= form.number_field :number, id: :lab_number, class: "form-control" %>
+      </div>
+    </div>
+  </div>
+  <div class = "row">
+    <div class="col-md-3">
+      <div class="form-group">
+        <%= form.label :startDate, "Start Date" %>
+        <%= form.date_field :startDate, id: :lab_startdate, class: "form-control" %>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group">
+        <%= form.label :endDate, "End Date" %>
+        <%= form.date_field :endDate, id: :lab_enddate, class: "form-control" %>
+      </div>
+    </div>
+  </div>
+  <div class = "row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <%= form.label :notes, "Notes" %>
+        <%= form.text_area :notes, id: :lab_notes, class: "form-control" %>
+      </div>
+    </div>
+  </div>
+
+  <div class = "row">
+    <div class = "col-md-4 text-right">
+      <div class="actions">
+        <%= link_to 'Cancel', courses_path, class: "btn btn-outline-danger my-2 my-sm-2" %>
+      </div>
+    </div>
+    <div class = "col-md-2 text-right">
+      <div class = "actions">
+        <%= form.submit class: "btn btn-outline-primary my-2 my-sm-2" %>
+      </div>
+     </div>
+  </div>
+</div>
+<% end %>

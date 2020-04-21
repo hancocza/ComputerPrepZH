@@ -1,0 +1,35 @@
+// Place all the styles related to the Home controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+ .jumbotron-fluid {
+     background-image: asset-url('chemicals.jpg');
+     background-size: cover;
+     height: 400px;
+ }
+
+ .jumbotron-fluid h1 {
+    color: #fff;
+    text-align: center;
+    margin-bottom: 30px;
+    letter-spacing: -1px;
+    font-weight: bold;
+ }
+
+ .jumbotron-fluid p {
+    color: #fff;
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: bold;
+ }
+.tableSelectors {
+    text-align: center;
+}
+
+.tableSelectors h2 {
+    margin: 5px;
+    color: #383838;
+    display: inline-block; /* show on the same line */
+    padding-right: 5px; /* small gap on the right of each header */
+    cursor: pointer;
+}

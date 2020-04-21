@@ -1,0 +1,64 @@
+<p id="notice"><%= notice %></p>
+
+<div class="container d-inline">
+  <div class="row">
+    <div class="col-md-2 text-left"> <h3><%= @computer.barcode %></h3></div>
+    <div class="col-md"><h1 style="display: inline-block"> <%= @computer.name %></h1></div>
+    <div class="col-md-2 text-center">
+      <h3>
+        <strong >Deparment:</strong>
+        <br>
+        <%= @computer.department %>
+      </h3>
+    </div>
+    <div class="col-md-1 text-center">
+       <%= link_to 'Edit Computer', edit_computer_path(@computer), class: "btn btn-outline-secondary my-2 my-sm-0" %>
+    </div> 
+  </div>
+  <hr>
+  <div class ="row">
+    <div class = "col-md">
+      <h3> 
+        Model:
+      <br>
+      <%= @computer.make %> <%= @computer.model%>
+      </h3>
+    </div>
+    <div class = "col-md-3">
+      <h3>
+        <strong >Storage Location:</strong>
+        <br>
+        <%= @computer.description %>
+      </h3>
+    </div>
+  </div>
+</div>
+
+<h2>
+  Associated Labs:
+</h2>  
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th class="w-25">Lab Name</th>
+      <th class="w-25">Week Number</th>
+      <th class="w-25">Date Range</th>
+      <th class="w-25"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @labs.each do |lab| %>
+      <tr>
+        <td class="w-25"><%= lab.name %></td>
+        <td class="w-25"><%= lab.number %></td>
+        <td class="w-25"><%= lab.startDate.strftime('%m/%d/%Y') %> - <%= lab.endDate.strftime('%m/%d/%Y') %></td>
+        <td class="w-25"><%= link_to lab, class: "btn btn-outline-success my-2 my-sm-2" do %>
+           Show
+          <% end %>
+         </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

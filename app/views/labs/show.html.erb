@@ -1,0 +1,71 @@
+<p id="notice"><%= notice %></p>
+
+<div class="container d-inline">
+  <div class="row">
+    <div class="col-md-2 text-left"> <h3><%= @lab.course.name %></h3></div>
+    <div class="col-md"><h1 style="display: inline-block"> <%= @lab.name %></h1></div>
+    <div class="col-md-2 text-center">
+      <h3>
+        <strong >Week:</strong>
+        <br>
+        <%= @lab.number %>
+      </h3>
+      <%= @lab.startDate.strftime('%m/%d/%Y') %> - <%= @lab.endDate.strftime('%m/%d/%Y') %>
+    </div>
+    <div class="col-md-1 text-center">
+       <%= link_to 'Edit Lab', edit_lab_path(@lab), class: "btn btn-outline-secondary my-2 my-sm-0" %>
+    </div> 
+  </div>
+  <hr>
+  <div class ="row">
+    <div class = "col-md-1">
+      <h4> 
+        Notes:
+      </h4>
+      <br>
+    </div>
+    <div class = "col-md">
+      <p>
+        <%= @lab.notes %>
+      <p>
+    </div>
+  </div>
+</div>
+<hr>
+<h2>
+  List of Computers:
+</h2>  
+
+<table class="table table-hover">
+  <thead class="thead-light">
+    <tr>
+      <th class="w-25">Barcode</th>
+      <th class="w-25">Computer Name</th>
+      <th class="w-25">Department</th>
+      <th class="w-25"><%= link_to'Add Computer to Lab', new_assignment_path, class: "btn btn-outline-primary my-2 my-sm-0" %></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @assignments.each do |assignment| %>
+      <tr>
+        <td class="w-25"><%= assignment.computer.barcode %></td>
+        <td class="w-25"><%= assignment.computer.name %></td>
+        <td class="w-25"><%= assignment.computer.department%></td>
+        <td class="w-25"><%= link_to assignment.computer, class: "btn btn-outline-success my-2 my-sm-2" do %>
+           Show
+          <% end %>
+          <%= link_to assignment, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-outline-danger my-2 my-sm-0" do%>
+           Delete
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+    <tr>
+      <td class = "w-25"><h4>Total Needed: <%= @lab.computers.count %></h4></td>
+      <td class = "w-25"></td>
+      <td class = "w-25"></td>
+      <td class = "w-25"></td>
+    </tr>
+  </tbody>
+</table>

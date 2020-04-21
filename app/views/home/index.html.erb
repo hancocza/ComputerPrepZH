@@ -1,0 +1,148 @@
+<div id="carousel" class="carousel slide" data-ride="carousel">
+  <ol class="carousel-indicators">
+    <li data-target="#carousel" data-slide-to="0" class="active"></li>
+    <li data-target="#carousel" data-slide-to="1"></li>
+    <li data-target="#carousel" data-slide-to="2"></li>
+  </ol>
+  <div class="carousel-inner">
+      <h1 class="display-3" style="color: #0065a4">CLAS Computer Prep List</h1>
+    <div class="carousel-item active">
+      <img class="d-block w-100" src="https://www.gvsu.edu/cms4/asset/DCFFCCFD-A7D7-C1AC-190806244D657C94/header/F4A2D6BB-05A4-07A4-9F712AAE6772A18A/1280.jpg" alt="Courses">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Courses</h5>
+        <p>A list of courses in the sciences</p>
+        <a class="btn btn-outline-light my-2 my-sm-2" style = "color: white" href="/courses" role="button">Go to List</a>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100" src="https://www.gvsu.edu/cms4/asset/8801D56F-0E64-FD23-4C5562ABF7D1512F/header/9D0D6722-D4F8-E68D-D575B3E186889D6B/1280.jpg" alt="Labs">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Labs</h5>
+        <p>A list of labs in the sciences</p>
+        <a class="btn btn-outline-light my-2 my-sm-2" style = "color: white" href="/labs" role="button">Go to List</a>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100" src="https://www.gvsu.edu/cms4/asset/778479D3-07DF-084E-09FD89BDE51017EA/header/0F861E0C-0275-8167-220806542BF695CD/1280.jpg" alt="Computers">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Computers</h5>
+        <p>A list of computers available in the sciences</p>
+        <a class="btn btn-outline-light my-2 my-sm-2" style = "color: white" href="/computers" role="button">Go to List</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class = "tableSelectors" style="clear: both">
+  <h2 onclick = "currentTable()" id = "currentButton" style = "text-decoration: underline solid #0065a4">Current Week</h2>
+  <h2>||</h2>
+  <h2 onclick = "nextTable()" id = "nextButton">Next Week</h2>
+</div>
+<br>
+<br>
+ <div id= "current">
+  <table class="table table-hover" id="current-table">
+    <thead class="thead-light">
+      <tr>
+        <th onclick = "tableSort('current-table','0')" class="w-25">Course</th>
+        <th onclick = "tableSort('current-table','1')" class="w-25">Lab Name</th>
+        <th onclick = "tableSort('current-table','2')" class="w-25">Computers Needed</th>
+        <th class="w-25"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @labs.each do |lab| %>
+      <tr>
+        <td class="w-25"><%= lab.course.name %></td>
+        <td class="w-25"><%= lab.name %></td>
+        <td class="w-25"><strong><%= lab.computers.count %></strong></td>
+        <td class="w-25"><%= link_to lab, class: "btn btn-outline-success my-2 my-sm-2" do %>
+           Show
+          <% end %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+    
+ <div id= "next" style = "display: none">
+  <table class="table table-hover" id= "next-table">
+    <thead class="thead-light">
+      <tr>
+        <th onclick = "tableSort('next-table','0')" class="w-25">Course</th>
+        <th onclick = "tableSort('next-table','1')" class="w-25">Lab Name</th>
+        <th onclick = "tableSort('next-table','2')" class="w-25">Computers Needed</th>
+        <th class="w-25"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @nextlabs.each do |lab| %>
+      <tr>
+        <td class="w-25"><%= lab.course.name %></td>
+        <td class="w-25"><%= lab.name %></td>
+        <td class="w-25"><strong><%= lab.computers.count %></strong></td>
+        <td class="w-25"><%= link_to lab, class: "btn btn-outline-success my-2 my-sm-2" do %>
+           Show
+          <% end %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<script>
+function tableSort(id, n) {
+  let table, rows, switching, i, x, y,shouldSwitch, dir, switchcount =0;
+  table = document.getElementById(id);
+  switching = true;
+  dir = "asc";
+  while (switching){
+    switching = false;
+    rows = table.rows;
+    for(i=1; i <rows.length -1; i++){
+      shouldSwitch = false;
+      x = rows[i].getElementsByTagName("td")[n];
+      y = rows[i+1].getElementsByTagName("td")[n];
+      if(dir == "asc"){
+        if(x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()){
+          shouldSwitch = true;
+          break;
+        } 
+      } else if(dir == "desc"){
+        if(x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()){
+          shouldSwitch = true;
+          break;
+        }
+      }
+    }
+    if(shouldSwitch){
+      rows[i].parentNode.insertBefore(rows[i+1], rows[i]);
+      switching = true;
+      switchcount++;
+    } else {
+     if(switchcount == 0 && dir == "asc"){
+       dir = "desc";
+       switching = true;
+     } 
+    }
+  }
+}
+  
+function currentTable(){
+  document.getElementById("current").style.display = "block";
+  document.getElementById("next").style.display = "none";
+  document.getElementById("currentButton").style.textDecoration="underline solid #0065a4";
+  document.getElementById("nextButton").style.textDecoration="initial";
+  
+  
+}
+
+function nextTable(){
+  document.getElementById("next").style.display = "block";
+  document.getElementById("current").style.display = "none";
+  document.getElementById("nextButton").style.textDecoration="underline solid #0065a4";
+  document.getElementById("currentButton").style.textDecoration="underline solid white";
+}
+</script>
+
+<%= javascript_pack_tag 'home', 'data-turbolinks-track': 'reload' %>

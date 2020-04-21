@@ -1,0 +1,32 @@
+<%= form_with(model: assignment, local: true) do |form| %>
+ <div class="container">
+  <div class="row">
+    <div class="col-md-5">
+      <div class = "form-group">
+        <%= form.label :lab_id %>
+        <%= form.select :lab_id, options_for_select(Lab.all.collect {|a| ["#{a.course.name} - #{a.name}",a.id]}, selected: (@assignment.lab ? @assignment.lab.id : Lab.first.id)),{}, class: "form-control" %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-5">
+      <div class = "form-group">
+        <%= form.label :computer_id %>
+        <%= form.select :computer_id, options_for_select(Computer.all.collect {|a| ["#{a.name}",a.id]}, selected: (@assignment.computer ? @assignment.computer.id : Computer.first.id)),{}, class: "form-control" %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class = "col-md-3 text-right">
+      <div class="actions">
+        <%= link_to 'Cancel', labs_path, class: "btn btn-outline-danger my-2 my-sm-2" %>
+      </div>
+    </div>
+    <div class = "col-md-2 text-right">
+      <div class = "actions">
+        <%= form.submit class: "btn btn-outline-primary my-2 my-sm-2" %>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>

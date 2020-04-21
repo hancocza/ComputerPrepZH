@@ -1,0 +1,131 @@
+<% if !notice.blank? %>
+	<p id="notice" class="alert alert-success"><%= notice %></p>
+<% end %>
+<body>
+<div class="container">
+  <div class="row">
+    <div class="col-md-9">
+      <h1 class="display-4" style="color: #0065a4">
+        Computers
+      </h1>
+    </div>
+    <div class="col-md-3 text-right">
+      <%= link_to 'Add New Computer', new_computer_path, class: "btn btn-outline-primary my-2 my-sm-2" %>
+    </div>
+  </div>
+</div>
+
+<div class = "container">
+  <div class = "row">
+      <button type="submit" name="bio" id = "bio-button" class = "btn btn-outline-secondary my-2 my-sm-2" onclick = "onClick(this.name)">
+        BIO
+      </button>
+      <button type="submit" name="bms" id = "bms-button" class = "btn btn-outline-secondary my-2 my-sm-2" onclick = "onClick(this.name)">
+        BMS
+      </button>
+      <button type="submit" name="chm" id = "chm-button" class = "btn btn-outline-secondary my-2 my-sm-2" onclick = "onClick(this.name)">
+        CHM
+      </button>
+      <button type="submit" name="cmb" id = "cmb-button" class = "btn btn-outline-secondary my-2 my-sm-2" onclick = "onClick(this.name)">
+        CMB
+      </button>
+      <button type="submit" name="geo" id = "geo-button" class = "btn btn-outline-secondary my-2 my-sm-2" onclick = "onClick(this.name)">
+        GEO
+      </button>
+      <button type="submit" name="phy" id = "phy-button" class = "btn btn-outline-secondary my-2 my-sm-2" onclick = "onClick(this.name)">
+        PHY
+      </button>
+      <button type="submit" name="computers"  id = "computers-button" class = "btn btn-outline-secondary my-2 my-sm-2" onclick = "onClick(this.name)">
+        ALL
+      </button>
+  
+  </div> 
+</div>
+    
+<table class="table table-hover" id="computer-table">
+  <thead class="thead-light">
+    <tr>
+      <th class="w-25">Barcode</th>
+      <th class="w-25"> Computer Name</th>
+      <th class="w-25">Storage Location</th>
+      <th class="w-25">Department</th>
+      <th class="w-25">Actions</th>
+      </tr>
+    </thead>
+    <tbody id ="table-body">
+    </tbody>
+  </table> 
+</body>
+
+<script>
+function displayComputers(data) {
+      let list = document.getElementById('table-body');
+      data.forEach((computer) => {
+        let tr = document.createElement('tr');
+        list.appendChild(tr);
+        let cell1 = document.createElement('td');
+        cell1.innerText = computer.barcode;
+        cell1.classList.add('w-25');
+        let cell2 = document.createElement('td');
+        cell2.innerText = computer.name;
+        cell2.classList.add('w-25');
+        let cell3 = document.createElement('td');
+        cell3.innerText = computer.description;
+        cell3.classList.add('w-25');
+        let cell4 = document.createElement('td');
+        cell4.innerText = computer.department;
+        cell4.classList.add('w-25');
+        let cell5 = document.createElement('td');
+        cell5.classList.add('w-25');
+        cell5.classList.add('text-center');
+        let showButton = document.createElement('button');
+        showButton.innerText = "Show";
+        showButton.className= "btn btn-outline-success my-2 my-sm-2";
+        showButton.onclick = function() {window.location.href = 'https://lab-prep-hancocza497419.codeanyapp.com/computers/' + computer.id};
+        tr.appendChild(cell1);
+        tr.appendChild(cell2);
+        tr.appendChild(cell3);
+        tr.appendChild(cell4);
+        tr.appendChild(cell5);
+        cell5.appendChild(showButton);
+      });
+    }
+
+    function getComputers(dept) {
+      document.getElementById("table-body").innerHTML="";
+      
+      console.log("Getting Computers");
+      let api = "https://lab-prep-hancocza497419.codeanyapp.com/" + dept + ".json"
+      
+      document.getElementById(dept +'-button').className="btn btn-primary my-2 my-sm-2"
+      let xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = () => {
+        console.log("Detected a change to readyState: " + xhr.readyState);
+        console.log(xhr);
+        if (xhr.readyState === 4) {
+          console.log("The data is ready:");
+          console.log("Data as received:");
+          console.log(xhr.response);
+          let data = JSON.parse(xhr.response);
+          console.log("Data after being parsed: ");
+          console.log(data);
+          displayComputers(data);          
+        }
+      }
+      xhr.open("GET", api, true);
+      xhr.send();
+    }
+  
+  function onClick(name){
+    let departments = ['bio','bms','chm','cmb','geo','phy','computers'];
+    
+    departments.forEach((department) =>{
+      document.getElementById(department + '-button').className="btn btn-outline-secondary my-2 my-sm-2"
+    });
+
+    let dept = name;
+    
+    document.getElementById(dept +'-button').className="btn btn-primary my-2 my-sm-2"
+    getComputers(dept);
+  }
+</script>

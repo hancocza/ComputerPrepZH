@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  barcode: 1
+  description: MyText
+  make: MyString
+  model: MyString
+  department: MyString
+
+two:
+  name: MyString
+  barcode: 1
+  description: MyText
+  make: MyString
+  model: MyString
+  department: MyString

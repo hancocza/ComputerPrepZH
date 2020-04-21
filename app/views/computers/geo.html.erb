@@ -1,0 +1,30 @@
+<table class="table table-hover" id="computer-table">
+  <thead class="thead-light">
+    <tr>
+      <th class="w-25">Barcode</th>
+      <th class="w-25"> Computer Name</th>
+      <th class="w-25">Storage Location</th>
+      <th class="w-25">Department</th>
+      <th class="w-25">Actions</th>
+      </tr>
+    </thead>
+    <tbody id ="table-body">  
+      <% @computers.each do |computer| %>
+      <tr>
+        <td class="w-25"><%= computer.barcode %></td>
+        <td class="w-25"><%= computer.name %></td>
+        <td class="w-25"><%= computer.description %></td>
+        <td class="w-25"><%= computer.department %></td>
+        <td class="w-25 text-center">
+          <%= link_to computer, class: "btn btn-outline-success my-2 my-sm-2" do %>
+           Show
+          <% end %>
+          <%= link_to computer, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-outline-danger my-2 my-sm-2" do %>
+          Delete
+          <% end %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table> 
+

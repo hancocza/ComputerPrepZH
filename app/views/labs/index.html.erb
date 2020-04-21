@@ -1,0 +1,46 @@
+<% if !notice.blank? %>
+	<p id="notice" class="alert alert-success"><%= notice %></p>
+<% end %>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-10 text-left">
+      <h1 class="display-4" style="color: #0065a4">
+        Labs
+      </h1>
+    </div>
+    <div class="col-md-2 text-right">
+      <%= link_to 'Add New Lab', new_lab_path, class: "btn btn-outline-primary my-2 my-sm-2" %>
+    </div>
+  </div>
+</div>
+    
+<table class="table table-hover">
+  <thead class="thead-light">
+    <tr>
+      <th class="w-25">Course Name</th>
+      <th class="w-25">Lab Name</th>
+      <th class="w-25">Week Number</th>
+      <th class="w-25">Date Range</th>
+      <th class="w-25">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @labs.each do |lab| %>
+      <tr>
+        <td class="w-25"><%=lab.course.name%></td>
+        <td class="w-25"><%= lab.name %></td>
+        <td class="w-25"><%= lab.number %></td>
+        <td class="w-25"><%= lab.startDate.strftime('%m/%d/%Y') %> - <%= lab.endDate.strftime('%m/%d/%Y') %></td>
+        <td class="w-25 text-center">
+          <%= link_to lab, class: "btn btn-outline-success my-2 my-sm-2" do %>
+           Show
+          <% end %>
+          <%= link_to lab, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-outline-danger my-2 my-sm-2" do %>
+          Delete
+          <% end %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
