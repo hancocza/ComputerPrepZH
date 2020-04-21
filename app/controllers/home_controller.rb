@@ -1,9 +1,9 @@
 class HomeController < ApplicationController
   def index
-    @labs = Lab.where("? BETWEEN labs.startDate AND labs.endDate", Date.current )
-    @labs.order! 'labs.startDate ASC'
+    @labs = Lab.where("? BETWEEN 'startDate' AND 'endDate'", Date.current )
+    @labs.order! 'startDate ASC'
     
-    @nextlabs = Lab.where("? BETWEEN labs.startDate AND labs.endDate", Date.current + 7)
-    @nextlabs.order! 'labs.startDate ASC'
+    @nextlabs = Lab.where("? BETWEEN 'startDate' AND 'endDate'", Date.current + 7)
+    @nextlabs.order! 'startDate ASC'
   end
 end
